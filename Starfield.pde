@@ -4,7 +4,7 @@ void setup()
 {
 	//your code here
 	size(1024, 1024);
-	particles = new Particle [500];
+	particles = new Particle [1000];
 	particles [0] = new OddballParticle();
 	particles [1] = new JumboParticle();
 	for (int i = 2; i < particles.length; i++)
@@ -34,7 +34,7 @@ class NormalParticle implements Particle
 		myY = 512;//(int) (Math.random() * 1024);
 		myColor = color((int) (Math.random() * 255), (int) (Math.random() * 255), (int) (Math.random() * 255));
 		angle = (Math.random() * 2 * Math.PI);
-		speed = (Math.random() * 10);
+		speed = 20 * (int) (Math.random() * 1 + 1);
 	}
 	void move()
 	{
@@ -50,7 +50,7 @@ class NormalParticle implements Particle
 	{
 		fill(myColor);
 		stroke(myColor);
-		line((float)myX, (float)myY, 512, 512);
+		//line((float)myX, (float)myY, 512, 512);
 		ellipse((float)myX, (float)myY, 10, 10);
 	}
 }
@@ -80,6 +80,7 @@ class OddballParticle implements Particle //uses an interface
 	{
 	  	myX = myX + (int) (Math.random() * 10 - 5);
 		myY = myY + (int) (Math.random() * 50 - 25);
+		//myY = Math.sqrt(200 - Math.sq(myX));
 	}
 }
 class JumboParticle extends NormalParticle//uses inheritance
