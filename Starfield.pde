@@ -34,7 +34,7 @@ class NormalParticle implements Particle
 		myY = 512;//(int) (Math.random() * 1024);
 		myColor = color((int) (Math.random() * 255), (int) (Math.random() * 255), (int) (Math.random() * 255));
 		angle = (Math.random() * 2 * Math.PI);
-		speed = 20 * (int) (Math.random() * 1 + 1);
+		speed = (int) (Math.random() * 10);
 	}
 	void move()
 	{
@@ -42,8 +42,9 @@ class NormalParticle implements Particle
 		myY = (myY + Math.sin(angle) * speed);
 		if (myX > 1024 || myY > 1024 || myX < 0 || myY < 0)
 		{
-			myX = 512;
-			myY = 512;
+			myX = mouseX;
+			myY = mouseY;
+			angle = Math.abs(180 - angle);
 		}
 	}
 	void show()
@@ -51,7 +52,7 @@ class NormalParticle implements Particle
 		fill(myColor);
 		stroke(myColor);
 		//line((float)myX, (float)myY, 512, 512);
-		ellipse((float)myX, (float)myY, 10, 10);
+		ellipse((float)myX, (float)myY, (int) Math.sqrt(Math.sq(mouseX) + Math.sq(myX)), (int) Math.sqrt(Math.sq(mouseY) + Math.sq(myY));
 	}
 }
 interface Particle
