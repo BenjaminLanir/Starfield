@@ -52,7 +52,7 @@ class NormalParticle implements Particle
 		fill(myColor);
 		stroke(myColor);
 		//line((float)myX, (float)myY, 512, 512);
-		ellipse((float)myX, (float)myY, (int) Math.sqrt(Math.sq(mouseX) + Math.sq(myX)), (int) Math.sqrt(Math.sq(mouseY) + Math.sq(myY));
+		ellipse((float)myX, (float)myY, (int) Math.sqrt(Math.sq(mouseX) + Math.sq(myX)), (int) Math.sqrt(Math.sq(mouseY) + Math.sq(myY)));
 	}
 }
 interface Particle
@@ -60,6 +60,56 @@ interface Particle
 	//your code here
 	public void show();
 	public void move();
+}
+class Player1
+{
+	float myX, myY, direction, speed;
+	boolean alive;
+	Player1()
+	{
+		myX = 50;
+		myY = 50;
+		direction = 0;
+		alive = true;
+		speed = 0;
+	}
+	void move()
+	{
+		if ()
+		{
+			if (speed = 10)
+			{
+				myX = (myX + Math.cos(angle) * speed);
+				myY = (myY + Math.sin(angle) * speed);
+			}
+			else
+			{
+				for (int i = 0; i < 200, i++)
+				{
+					speed = speed + 0.025;
+					myX = (myX + Math.cos(angle) * speed);
+					myY = (myY + Math.sin(angle) * speed);
+				}
+			}
+		}
+		else if ()
+		{
+			if (speed = -10)
+			{
+				myX = (myX + Math.cos(angle) * speed);
+				myY = (myY + Math.sin(angle) * speed);
+			}
+			else
+			{
+				for (int j = 0; j < 200; j++)
+				{
+					speed = speed + 0.025;
+					myX = (myX + Math.cos(angle) * speed);
+					myY = (myY + Math.sin(angle) * speed);
+				}
+			}
+		}
+	}
 }
 class OddballParticle implements Particle //uses an interface
 {
@@ -93,4 +143,3 @@ class JumboParticle extends NormalParticle//uses inheritance
 	}
 	//your code here
 }
-
