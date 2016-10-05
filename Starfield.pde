@@ -1,9 +1,12 @@
 //your code here
 Particle [] particles;
+boolean forward = false;
+Player1 player;
 void setup()
 {
 	//your code here
 	size(1024, 1024);
+	player = new Player1();
 	particles = new Particle [1000];
 	particles [0] = new OddballParticle();
 	particles [1] = new JumboParticle();
@@ -21,6 +24,8 @@ void draw()
 		particles[j].show();
 		particles[j].move();
 	}
+	player.move();
+	player.show();
 }
 class NormalParticle implements Particle
 {
@@ -52,7 +57,8 @@ class NormalParticle implements Particle
 		fill(myColor);
 		stroke(myColor);
 		//line((float)myX, (float)myY, 512, 512);
-		ellipse((float)myX, (float)myY, (int) Math.sqrt(Math.sq(mouseX) + Math.sq(myX)), (int) Math.sqrt(Math.sq(mouseY) + Math.sq(myY)));
+		ellipse((float)myX, (float)myY, 10, 10);
+		//ellipse((float)myX, (float)myY, (int) (Math.sqrt(mouseX * mouseX + myX * myX)), (int) (Math.sqrt(mouseY * mouseY + myY * myY)));
 	}
 }
 interface Particle
@@ -63,36 +69,33 @@ interface Particle
 }
 class Player1
 {
-	float myX, myY, direction, speed;
+	float myX, myY, angle, speed;
 	boolean alive;
 	Player1()
 	{
 		myX = 50;
 		myY = 50;
-		direction = 0;
+		angle = 0;
 		alive = true;
 		speed = 0;
 	}
 	void move()
 	{
-		if ()
+		if (forward == true)
 		{
-			if (speed = 10)
+			if (speed == 10)
 			{
-				myX = (myX + Math.cos(angle) * speed);
-				myY = (myY + Math.sin(angle) * speed);
+				myX = (float)(myX + Math.cos(angle) * speed);
+				myY = (float)(myY + Math.sin(angle) * speed);
 			}
 			else
 			{
-				for (int i = 0; i < 200, i++)
-				{
-					speed = speed + 0.025;
-					myX = (myX + Math.cos(angle) * speed);
-					myY = (myY + Math.sin(angle) * speed);
-				}
+					speed = speed + 0.25;
+					myX = (float)(myX + Math.cos(angle) * speed);
+					myY = (float)(myY + Math.sin(angle) * speed);
 			}
 		}
-		else if ()
+		/*else if
 		{
 			if (speed = -10)
 			{
@@ -103,12 +106,18 @@ class Player1
 			{
 				for (int j = 0; j < 200; j++)
 				{
-					speed = speed + 0.025;
+					speed = speed - 0.025;
 					myX = (myX + Math.cos(angle) * speed);
 					myY = (myY + Math.sin(angle) * speed);
 				}
 			}
-		}
+		}*/
+	}
+	void show()
+	{
+		fill (0, 255, 0);
+		rect(myX, myY, 10, 10);
+		triangle(myX, myY, myX + 10, myY + 10, myX - 10, myY - 20);
 	}
 }
 class OddballParticle implements Particle //uses an interface
@@ -125,12 +134,13 @@ class OddballParticle implements Particle //uses an interface
 	{
 		fill(myColor);
 		stroke(myColor);
-		rect(myX, myY, 50, 50);
+		//rect(myX, myY, 50, 50);
+		ellipse((float)myX, (float)myY, 10, 10);
 	}
 	void move()
 	{
-	  	myX = myX + (int) (Math.random() * 10 - 5);
-		myY = myY + (int) (Math.random() * 50 - 25);
+	  	myX = myX + (int) (Math.sqrt(mouseX * mouseX + myX * myX));//(int) (Math.random() * 10 - 5);
+		myY = myY + (int) (Math.sqrt(mouseY * mouseY + myY * myY));//(int) (Math.random() * 50 - 25);
 		//myY = Math.sqrt(200 - Math.sq(myX));
 	}
 }
@@ -142,4 +152,13 @@ class JumboParticle extends NormalParticle//uses inheritance
 		ellipse((float) myX, (float) myY, 50, 50);
 	}
 	//your code here
+}
+void mousePressed()
+{
+	forward = true;
+}
+void mouseReleased() 
+{
+forward = false;
+player.speed = 0;	
 }
