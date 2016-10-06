@@ -1,7 +1,9 @@
 //your code here
 Particle [] particles;
 boolean forward = false;
+boolean backward = false;
 Player1 player;
+double theAngle = 0;
 void setup()
 {
 	//your code here
@@ -24,6 +26,7 @@ void draw()
 		particles[j].show();
 		particles[j].move();
 	}
+	translate (player.myX + 10, player.myY + 10);
 	player.move();
 	player.show();
 }
@@ -81,6 +84,7 @@ class Player1
 	}
 	void move()
 	{
+		angle = (float) theAngle;
 		if (forward == true)
 		{
 			if (speed == 10)
@@ -95,29 +99,30 @@ class Player1
 					myY = (float)(myY + Math.sin(angle) * speed);
 			}
 		}
-		/*else if
+		else if (backward == true)
 		{
-			if (speed = -10)
+			if (speed == 10)
 			{
-				myX = (myX + Math.cos(angle) * speed);
-				myY = (myY + Math.sin(angle) * speed);
+				myX = (float)(-1 * (myX + Math.cos(angle) * speed));
+				myY = (float)(-1 * (myY + Math.sin(angle) * speed));
 			}
 			else
 			{
-				for (int j = 0; j < 200; j++)
+				for (int j = 0; j < 40; j++)
 				{
-					speed = speed - 0.025;
-					myX = (myX + Math.cos(angle) * speed);
-					myY = (myY + Math.sin(angle) * speed);
+					speed = speed + 0.25;
+					myX = (float)(-1 * (myX + Math.cos(angle) * speed));
+					myY = (float)(-1 * (myY + Math.sin(angle) * speed));
 				}
 			}
-		}*/
+		}
 	}
 	void show()
 	{
 		fill (0, 255, 0);
+		rotate(angle); 
 		rect(myX, myY, 10, 10);
-		triangle(myX, myY, myX + 10, myY + 10, myX - 10, myY - 20);
+		//triangle(myX, myY, myX + 10, myY + 10, myX - 10, myY - 20);
 	}
 }
 class OddballParticle implements Particle //uses an interface
@@ -135,12 +140,14 @@ class OddballParticle implements Particle //uses an interface
 		fill(myColor);
 		stroke(myColor);
 		//rect(myX, myY, 50, 50);
-		ellipse((float)myX, (float)myY, 10, 10);
+		rect((float)myX, (float)myY, 20, 20);
 	}
 	void move()
 	{
-	  	myX = myX + (int) (Math.sqrt(mouseX * mouseX + myX * myX));//(int) (Math.random() * 10 - 5);
-		myY = myY + (int) (Math.sqrt(mouseY * mouseY + myY * myY));//(int) (Math.random() * 50 - 25);
+		myX = myX + (int) (Math.random() * 10 - 5);
+		myY = myY + (int) (Math.random() * 10 - 5);
+	  	//myX = myX + (int) (Math.sqrt(mouseX * mouseX + myX * myX));//(int) (Math.random() * 10 - 5);
+		//myY = myY + (int) (Math.sqrt(mouseY * mouseY + myY * myY));//(int) (Math.random() * 50 - 25);
 		//myY = Math.sqrt(200 - Math.sq(myX));
 	}
 }
@@ -153,7 +160,7 @@ class JumboParticle extends NormalParticle//uses inheritance
 	}
 	//your code here
 }
-void mousePressed()
+/*void mousePressed()
 {
 	forward = true;
 }
@@ -161,4 +168,50 @@ void mouseReleased()
 {
 forward = false;
 player.speed = 0;	
+}*/
+void keyPressed()
+{
+	if (key == 'w')
+	{
+		forward = true;
+    }
+    else if (key == 's')
+    {
+    	backward = true;
+    }
+    else if (key == 'd')
+    {
+    	if (theAngle == 360)
+    	{
+    		theAngle = 0;
+    	}
+    	else
+    	{
+    		theAngle = theAngle + 0.1;
+    	}
+    }
+    else if (key == 'a')
+    {
+    	if (theAngle == 0)
+    	{
+    		theAngle = 360;
+    	}
+    	else
+    	{
+    		theAngle = theAngle - 0.1;
+    	}
+    }
+}
+void keyReleased()
+{
+	if (key == 'w')
+	{
+		forward = false;
+		player.speed = 0;
+    }
+    else if (key == 's')
+    {
+    	backward = false;
+    	player.speed = 0;
+    }
 }
